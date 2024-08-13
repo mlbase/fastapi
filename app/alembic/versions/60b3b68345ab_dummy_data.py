@@ -69,6 +69,13 @@ def upgrade() -> None:
         """
     ), user_pairs
     )
+    conn.execute(sa.text(
+        """
+        INSERT INTO friendship(user_id, friend_id, is_delete) VALUES(:friend_id, :user_id, :is_delete)
+        ON CONFLICT(user_id, friend_id) DO NOTHING; 
+        """
+    ), user_pairs
+    )
     conn.commit()
 
 
@@ -77,3 +84,4 @@ def downgrade() -> None:
                       "TRUNCATE TABLE friendship;")
     conn = op.get_bind()
     conn.execute(sa.text(truncate_query))
+    conn.commit()
