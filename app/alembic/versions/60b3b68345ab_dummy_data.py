@@ -55,11 +55,12 @@ def upgrade() -> None:
     user_ids = {row[0] for row in user_ids}
     user_pairs= []
     for _ in range(10000):
-        user_id = faker.random_int(1, 50000)
-        friend_id = faker.random_int(1, 50000)
+        user_id = faker.random_element(list(user_ids))
+        friend_id = faker.random_element(list(user_ids))
 
         if user_id in user_ids and friend_id in user_ids and user_id != friend_id:
             user_pairs.append({"user_id": user_id, "friend_id": friend_id, "is_delete": False})
+    print(user_pairs[:10])  # Print the first 10 entries to verify
 
     conn.execute(sa.text(
         """
