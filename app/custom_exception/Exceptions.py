@@ -52,3 +52,11 @@ class AuthorizationException(ExceptionBase):
         self.detail = "권한이 없습니다"
         self.dev = "validate token is needed"
         self.set_content(detail=self.detail, dev=self.dev)
+
+
+class UserNotFoundException(ExceptionBase):
+    def __init__(self):
+        self.status_code = 400
+        self.detail = "유저를 찾을 수 없습니다."
+        self.dev = "db cannot found user"
+        self.set_content(detail=self.detail, dev=self.dev)

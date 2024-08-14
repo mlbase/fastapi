@@ -13,7 +13,7 @@ from custom_exception.Exceptions import SQLException
 
 class CRUDFriend(CRUDBase[friendship, FriendBase, FriendWithUser]):
 
-    async def create(self, session: AsyncSession, *, obj_in: FriendBase) -> Any:
+    async def create(self, session: AsyncSession, obj_in: FriendBase) -> Any:
         if not user.get(session, obj_in.user_id):
             raise SQLException
         if not user.get(session, obj_in.friend_id):

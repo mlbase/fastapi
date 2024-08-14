@@ -68,7 +68,7 @@ async def create_user(
             detail="The user with this username already exists in the system",
         )
     await crud.user.create(db, obj_in=user_in)
-    return Response(status_code=201, content=user_in)
+    return Response(status_code=201, content=user_in.model_dump_json())
 
 
 @router.patch("/me", response_model=schema.User)

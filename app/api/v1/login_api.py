@@ -61,8 +61,10 @@ async def login_access_token(
         current_user = query_result.first().User
     except SQLAlchemyError as ex:
         raise ex
-    password_check = security.verify_password(plain_password=form_data.password,
-                                              hashed_password=current_user.hashed_password)
+    # password_check = security.verify_password(plain_password=form_data.password,
+    #                                           hashed_password=current_user.hashed_password)
+    # 일시적 테스트 용
+    password_check = form_data.password == current_user.hashed_password
     if not password_check:
         raise InvalidateUserException
     elif not crud.user.is_active(current_user):

@@ -53,7 +53,8 @@ async def get_current_user(
     query = select(model.User).where(model.User.id == id)
     print(query)
     try:
-        user = await session.execute(query)
+        result = await session.execute(query)
+        user = result.scalar_one_or_none()
     except SQLAlchemyError:
         raise SQLAlchemyError
     if not user:
